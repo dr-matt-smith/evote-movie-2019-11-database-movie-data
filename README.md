@@ -24,7 +24,6 @@ The project has been refactored as follows:
       insert into movie values (1, 'jaws',9.99);
       insert into movie values (2, 'jaws2',4);
       insert into movie values (3, 'mama mia',9.99);
-      insert into movie 
     ```
 
 - use Composer to add the `pdo-crud-for-free-repositories` library to this project. At the command line type:
