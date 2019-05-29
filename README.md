@@ -52,3 +52,47 @@ The project has been refactored as follows:
 
       ...
     ```
+
+- replace the contents of class `MovieRepository` with the following - all we need is a constructor since all the work is being done by methods we are inheriting from class `DatabaseTableRepository`:
+
+    ```php
+      namespace Mattsmithdev;
+      
+      use Mattsmithdev\PdoCrudRepo\DatabaseTableRepository;
+      
+      class MovieRepository extends DatabaseTableRepository
+      {
+          public function __construct()
+          {
+              parent::__construct(__NAMESPACE__, 'Movie', 'movie');
+          }
+      
+      }    
+    ```
+    
+    - Note, we could of could write out the namespace ecplicity in our constructor parent call:
+    
+        ```php
+            parent::__construct('Mattsmithdev', 'Movie', 'movie');
+        ```
+        
+    - we need to pass these values to the constructor, so that the methods in `DatabaseTableRepository` can use reflection on the `Movie` entity class to generate and execute appropriate `SQL` commands to communicate with the database tgable `movie`
+   `
+    
+That's it - everything should work just as before, except that the details of the movies are now coming from the database rather than a har-coded array of objects in `MovieRepository`. Since `MovieRepository` inherits method `findAll()` from `DatabaseTableRepository` we don't need to change our controller methods in class `MainController` at all - so the following should work just as before:
+
+```php
+    class MainController
+    {
+            ... other methds          
+        
+          function listMovies()
+          {
+              $movieRepository = new \Mattsmithdev\MovieRepository();
+              $movies = $movieRepository->findAll();
+        
+              $pageTitle = 'list';
+              $listPageStyle = 'current_page';
+              require_once __DIR__ . '/../templates/list.php';
+          }
+```

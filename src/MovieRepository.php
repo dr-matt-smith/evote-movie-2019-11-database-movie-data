@@ -8,7 +8,7 @@ class MovieRepository extends DatabaseTableRepository
 {
     public function __construct()
     {
-        parent::__construct('Mattsmithdev', 'Movie', 'movie');
+        parent::__construct(__NAMESPACE__, 'Movie', 'movie');
     }
 
 }
